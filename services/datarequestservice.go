@@ -11,6 +11,7 @@ import (
 	"github.com/nestrip/request-data-service/db"
 	"github.com/nestrip/request-data-service/ent/user"
 	"github.com/nestrip/request-data-service/pkg"
+	"path/filepath"
 )
 
 func DataRequestService(context context.Context) {
@@ -39,6 +40,13 @@ func DataRequestService(context context.Context) {
 			fileData, err := pkg.MinioClient.GetObject(context, "uploads", f.CdnFileName, minio.GetObjectOptions{})
 			if err == nil {
 				_ = pkg.AddMinioFileToZip(zipFile, "uploads/"+f.CdnFileName, fileData)
+			}
+		}
+
+		if u.Avatar != nil {
+			avatarData, err := pkg.MinioClient.GetObject(context, "avatars", *u.Avatar, minio.GetObjectOptions{})
+			if err == nil {
+				_ = pkg.AddMinioFileToZip(zipFile, "avatar"+filepath.Ext(*u.Avatar), avatarData)
 			}
 		}
 
