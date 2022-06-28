@@ -17,10 +17,12 @@ func main() {
 
 	db.Connect()
 	pkg.ConnectToMinio()
+	pkg.InitMailGun()
 
 	taskScheduler := chrono.NewDefaultTaskScheduler()
 	// ignoring the error, since there are no real cases that an error happens
-	_, _ = taskScheduler.ScheduleAtFixedRate(services.DataRequestService, 1*time.Minute) //TODO: revert this to prod
+	_, _ = taskScheduler.ScheduleAtFixedRate(services.DataRequestService, 24*time.Hour)
+	_, _ = taskScheduler.ScheduleAtFixedRate(services.ExpiredDataRequestService, 5*time.Hour)
 
 	runtime.Goexit()
 

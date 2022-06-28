@@ -5,12 +5,14 @@ go 1.17
 require (
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/joho/godotenv v1.4.0
+	github.com/mailgun/mailgun-go/v4 v4.8.1
 	github.com/minio/minio-go/v7 v7.0.29
 	github.com/procyon-projects/chrono v1.1.0
 )
 
 require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid v1.3.1 // indirect
 	github.com/kr/pretty v0.2.0 // indirect
@@ -19,6 +21,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/pkg/errors v0.8.1 // indirect
 	github.com/rs/xid v1.2.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
@@ -26,8 +29,8 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.4.2 // indirect
-	entgo.io/ent v0.10.2-0.20220502113020-4ac82f5bb3f0
+	ariga.io/atlas v0.3.7 // indirect
+	entgo.io/ent v0.10.0
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/go-openapi/inflect v0.19.0 // indirect

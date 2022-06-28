@@ -24,7 +24,7 @@ func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).Default(uuid.New),
 		field.Time("created_at").Default(time.Now),
-		field.Time("last_login").Optional().Default(time.Time{}),
+		field.Time("last_login").Optional().Default(func() time.Time { return time.Time{} }),
 		field.String("registration_ip").Default(""),
 		field.String("avatar").Optional().Nillable(), // This is the name that the cdn stores it as
 
@@ -88,8 +88,8 @@ func (User) Fields() []ent.Field {
 		field.Int64("tokenversion").Default(int64(rand.Uint32())), //StructTag(`json:"-"`),
 
 		field.Enum("rank").Values("FREE", "NORMAL", "PREMIUM", "MODERATOR", "ADMIN").Default("NORMAL").StructTag(`json:"rank"`),
-		field.Int64("premium_expires_at").Default(-1),                         //StructTag(`json:"-"`),
-		field.Time("last_testimonial_update").Optional().Default(time.Time{}), //StructTag(`json:"-"`),
+		field.Int64("premium_expires_at").Default(-1),                                                     //StructTag(`json:"-"`),
+		field.Time("last_testimonial_update").Optional().Default(func() time.Time { return time.Time{} }), //StructTag(`json:"-"`),
 		field.Time("last_username_update").Optional().Nillable().StructTag(`json:"last_username_update"`),
 		field.Time("last_password_update").Optional().Nillable().StructTag(`json:"last_password_update"`),
 
@@ -97,17 +97,17 @@ func (User) Fields() []ent.Field {
 
 		field.Bool("email_verified").Default(true).StructTag(`json:"emailVerified"`),
 		field.String("email_verification_key").Optional(), //.Sensitive(),
-		field.Time("last_email_update").Optional().Nillable().Default(time.Time{}).StructTag(`json:"last_email_update"`),
+		field.Time("last_email_update").Optional().Nillable().Default(func() time.Time { return time.Time{} }).StructTag(`json:"last_email_update"`),
 
 		field.String("password_reset_token").Optional().Nillable(), //.Sensitive(), removed to make it actually visible in the json
 
 		// if the account will be deleted
 		field.Bool("deleting").Default(false).StructTag(`json:"deleting"`),
 		// this is the date the user requested their account to be deleted
-		field.Time("requested_deletion_at").Optional().Nillable().Default(time.Time{}).StructTag(`json:"requested_deletion_at"`),
+		field.Time("requested_deletion_at").Optional().Nillable().Default(func() time.Time { return time.Time{} }).StructTag(`json:"requested_deletion_at"`),
 
 		field.Bool("requesting_data").Default(false).StructTag(`json:"requesting_data"`),
-		field.Time("last_data_request").Optional().Nillable().Default(time.Time{}).StructTag(`json:"last_data_request"`),
+		field.Time("last_data_request").Optional().Nillable().Default(func() time.Time { return time.Time{} }).StructTag(`json:"last_data_request"`),
 	}
 }
 

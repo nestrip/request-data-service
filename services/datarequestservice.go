@@ -22,7 +22,7 @@ func DataRequestService(context context.Context) {
 		AllX(context)
 
 	for _, u := range users {
-		fmt.Println("Processing user", u.Username)
+		fmt.Println("Processing data request for user", u.Username)
 
 		buf := new(bytes.Buffer)
 		zipFile := zip.NewWriter(buf)
@@ -46,11 +46,13 @@ func DataRequestService(context context.Context) {
 
 		fileName := uuid.New().String() + ".zip"
 		u.Update().SetRequestingData(false).SaveX(context)
-		db.Client.DataRequest.Create().SetCreator(u).SetCdnName(fileName).SetExpired(false).SaveX(context)
+		dR := db.Client.DataRequest.Create().SetCreator(u).SetCdnName(fileName).SetExpired(false).SaveX(context)
 		_, err := pkg.MinioClient.PutObject(context, "data-requests", fileName, buf, int64(buf.Len()), minio.PutObjectOptions{})
 
 		if err != nil {
 			panic(err)
 		}
+
+		pkg.SendDataRequestComplete(u, dR, context)
 	}
 }
