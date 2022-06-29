@@ -17,7 +17,6 @@ FROM gcr.io/distroless/base-debian10
 WORKDIR /
 
 COPY --from=build /service /service
-ADD CHECKS .
 
 USER nonroot:nonroot
 
