@@ -21,8 +21,8 @@ func main() {
 
 	taskScheduler := chrono.NewDefaultTaskScheduler()
 	// ignoring the error, since there are no real cases that an error happens
-	_, _ = taskScheduler.ScheduleAtFixedRate(services.DataRequestService, 24*time.Hour)
-	_, _ = taskScheduler.ScheduleAtFixedRate(services.ExpiredDataRequestService, 5*time.Hour)
+	_, _ = taskScheduler.ScheduleAtFixedRate(services.DataRequestService, 1*time.Hour)
+	_, _ = taskScheduler.ScheduleAtFixedRate(services.ExpiredDataRequestService, 1*time.Hour)
 
 	runtime.Goexit()
 
