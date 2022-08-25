@@ -32,6 +32,7 @@ func (File) Fields() []ent.Field {
 		field.Bool("exploding").Default(false).StructTag(`json:"exploding"`),
 		field.Bool("exploded").Default(false).StructTag(`json:"exploded"`),
 		field.String("deletion_key").Sensitive().Default(""),
+		field.Bool("archived"), // an archived file is more than 30 days old, and stored on a different disk
 	}
 }
 

@@ -37,10 +37,24 @@ func DataRequestService(context context.Context) {
 		_ = pkg.AddFileToZip(zipFile, "files.json", fileBytes)
 
 		for _, f := range files {
-			fileData, err := pkg.MinioClient.GetObject(context, "uploads", f.CdnFileName, minio.GetObjectOptions{})
-			if err == nil {
-				_ = pkg.AddMinioFileToZip(zipFile, "uploads/"+f.CdnFileName, fileData)
+			var file *minio.Object
+
+			if f.Archived {
+				fileData, err := pkg.ArchiveMinioClient.GetObject(context, "uploads", f.CdnFileName, minio.GetObjectOptions{})
+				if err == nil {
+					continue
+				}
+				file = fileData
+
+			} else {
+				fileData, err := pkg.MinioClient.GetObject(context, "uploads", f.CdnFileName, minio.GetObjectOptions{})
+				if err == nil {
+					continue
+				}
+				file = fileData
 			}
+
+			_ = pkg.AddMinioFileToZip(zipFile, "uploads/"+f.CdnFileName, file)
 		}
 
 		if u.Avatar != nil {
