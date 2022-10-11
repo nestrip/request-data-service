@@ -10,14 +10,14 @@ import (
 
 var MG *mailgun.MailgunImpl
 
-//InitMailGun loads the stuff from the environment variables
+// InitMailGun loads the stuff from the environment variables
 func InitMailGun() {
 	MG = mailgun.NewMailgun(os.Getenv("MAILGUN_DOMAIN"), os.Getenv("MAILGUN_API_KEY"))
 	MG.SetAPIBase(mailgun.APIBaseEU)
 }
 
 func SendDataRequestComplete(user *ent.User, request *ent.DataRequest, c context.Context) {
-	message := MG.NewMessage(fmt.Sprintf("nest.rip <%s>", os.Getenv("MAILGUN_SENDER")), "Password changed",
+	message := MG.NewMessage(fmt.Sprintf("nest.rip <%s>", os.Getenv("MAILGUN_SENDER")), "Data Requested",
 		fmt.Sprintf(
 			"Hello %s "+
 				"\n\n"+
