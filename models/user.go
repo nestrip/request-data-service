@@ -87,7 +87,7 @@ func (User) Fields() []ent.Field {
 		// This is there, so I can invalidate my jwt tokens, on password change for example
 		field.Int64("tokenversion").Default(int64(rand.Uint32())), //StructTag(`json:"-"`),
 
-		field.Enum("rank").Values("FREE", "NORMAL", "PREMIUM", "MODERATOR", "ADMIN").Default("NORMAL").StructTag(`json:"rank"`),
+		field.Enum("rank").Values("FREE", "NORMAL", "PREMIUM", "MODERATOR", "ADMIN", "INVITED", "OWNER").Default("INVITED").StructTag(`json:"rank"`),
 		field.Int64("premium_expires_at").Default(-1),                                                     //StructTag(`json:"-"`),
 		field.Time("last_testimonial_update").Optional().Default(func() time.Time { return time.Time{} }), //StructTag(`json:"-"`),
 		field.Time("last_username_update").Optional().Nillable().StructTag(`json:"last_username_update"`),
@@ -108,6 +108,15 @@ func (User) Fields() []ent.Field {
 
 		field.Bool("requesting_data").Default(false).StructTag(`json:"requesting_data"`),
 		field.Time("last_data_request").Optional().Nillable().Default(func() time.Time { return time.Time{} }).StructTag(`json:"last_data_request"`),
+
+		field.Int("strikes").Default(0).StructTag(`json:"strikes"`),
+
+		field.Bool("disabled").Default(false).StructTag(`json:"disabled"`),
+		field.Bool("twofa_enabled").Default(false).StructTag(`json:"twofa_enabled"`),
+		field.String("twofa_secret").Optional().Sensitive(),
+		field.Strings("twofa_recovery_codes").Optional(),
+
+		field.Bool("allow_beta").Default(false).StructTag(`json:"allow_beta"`),
 	}
 }
 
